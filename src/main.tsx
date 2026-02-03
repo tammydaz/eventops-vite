@@ -1,10 +1,7 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { initializeBlock } from '@airtable/blocks/ui';
 import App from './App';
 
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  const root = createRoot(rootElement);
-  initializeBlock(() => root.render(<App />));
-}
+initializeBlock(() => {
+  ReactDOM.render(<App />, document.getElementById('root'));
+});

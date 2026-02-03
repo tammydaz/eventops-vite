@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   useBase,
   useRecords,
@@ -15,6 +15,7 @@ import {
   colors,
 } from '@airtable/blocks/ui';
 import { FieldType } from '@airtable/blocks/models';
+import type { Record as AirtableRecord } from '@airtable/blocks/models';
 
 /**
  * EventOps BEO Form Application
@@ -56,10 +57,11 @@ export default function App() {
   // Get the selected table
   const table = selectedTableId ? base.getTableByIdIfExists(selectedTableId) : null;
 
-  // Get records from the selected table (if it has a "Name" field)
-  const records = useRecords(
-    table && table.fields.some(field => field.name === 'Name') ? table : null
-  );
+  // Get records from the selected table 
+  // Type assertion needed as useRecords has strict overloads
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recordsData = useRecords(table as any);
+  const records: AirtableRecord[] = Array.isArray(recordsData) ? recordsData : [];
 
   // Get available tables
   const tables = base.tables;
@@ -73,9 +75,11 @@ export default function App() {
   };
 
   // Handle table selection
-  const handleTableSelect = (tableId: string) => {
-    setSelectedTableId(tableId);
-    globalConfig.setAsync('selectedTableId', tableId);
+  const handleTableSelect = (tableId: string | number | boolean | undefined | null) => {
+    if (tableId && typeof tableId === 'string') {
+      setSelectedTableId(tableId);
+      globalConfig.setAsync('selectedTableId', tableId);
+    }
   };
 
   // Handle form submission
@@ -151,7 +155,6 @@ export default function App() {
             value={selectedTableId || ''}
             onChange={value => handleTableSelect(value)}
             options={tables.map(t => ({ value: t.id, label: t.name }))}
-            placeholder="Choose a table..."
             width="100%"
           />
         </FormField>
@@ -185,9 +188,9 @@ export default function App() {
                 Events in {table.name}
               </Heading>
 
-              {records && records.length > 0 ? (
+              {records.length > 0 ? (
                 <Box>
-                  {records.map(record => (
+                  {records.map((record: AirtableRecord) => (
                     <Box
                       key={record.id}
                       padding={2}
@@ -207,7 +210,7 @@ export default function App() {
               ) : (
                 <Box padding={3} textAlign="center">
                   <Text textColor="light">
-                    No events found. Click "Create Event" to add your first event.
+                    No events found. Click &ldquo;Create Event&rdquo; to add your first event.
                   </Text>
                 </Box>
               )}
@@ -299,7 +302,7 @@ export default function App() {
           borderColor="lightGray2"
           textAlign="center"
         >
-          <Icon name="table" size={48} fillColor={colors.GRAY} marginBottom={2} />
+          <Icon name="cog" size={48} fillColor={colors.GRAY} marginBottom={2} />
           <Text textColor="light" size="large">
             Select a table above to get started
           </Text>

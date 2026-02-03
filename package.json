@@ -15,13 +15,13 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@airtable/blocks": "^2.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@airtable/blocks": "^1.19.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
+    "@types/react": "^17.0.75",
+    "@types/react-dom": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react": "^4.2.1",
