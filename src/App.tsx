@@ -85,11 +85,13 @@ export default function App() {
   // Handle form submission
   const handleSubmit = async () => {
     if (!table) {
+      // NOTE: In production, consider using Airtable's Dialog component instead of alert
       alert('Please select a table first');
       return;
     }
 
     if (!formData.eventName) {
+      // NOTE: In production, consider using Airtable's Dialog component instead of alert
       alert('Event name is required');
       return;
     }
@@ -125,9 +127,11 @@ export default function App() {
       // Switch to list view to show the new record
       setSelectedView('list');
 
+      // NOTE: In production, consider using Airtable's Dialog component instead of alert
       alert('Event created successfully!');
     } catch (error) {
       console.error('Error creating record:', error);
+      // NOTE: In production, consider using Airtable's Dialog component instead of alert
       alert('Failed to create event. Please check your permissions and try again.');
     }
   };
