@@ -1,0 +1,10 @@
+{
+  "id": "eventops-beo-form",
+  "name": "EventOps BEO Form",
+  "description": "Banquet Event Order (BEO) form management for event operations",
+  "version": "1.0.0",
+  "icon": "https://raw.githubusercontent.com/tammydaz/eventops-vite/main/public/icon.png",
+  "frontendEntry": "./index.html",
+  "settings": [],
+  "extensions": []
+}
